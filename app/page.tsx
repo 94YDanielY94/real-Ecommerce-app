@@ -6,6 +6,7 @@ export default function Home() {
     <div>
       <Navbar />
       <ShopFilters />
+      
       <div className="product-grid flex  justify-center flex-wrap gap-8 px-18">
         <ProductCard />
         <ProductCard />

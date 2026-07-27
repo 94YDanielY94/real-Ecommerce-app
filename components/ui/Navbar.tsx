@@ -11,7 +11,7 @@ const Navbar = () => {
       </div>
       <InputButtonGroup />
       <div className="action flex gap-6 items-center ">
-        <Link href={"/"} className="p-4 rounded-full hover:bg-neutral-100 transition-all">
+        <Link href={"/products"} className="p-4 rounded-full hover:bg-neutral-100 transition-all">
           <svg
             width="22px"
             height="22px"
@@ -48,7 +48,7 @@ const Navbar = () => {
             />
           </svg>
         </Link>
-        <Link href={"/login"} className="px-4 py-1.5 rounded-full hover:bg-neutral-100 transition-all">
+        <Link href={"/cart"} className="px-4 py-1.5 rounded-full hover:bg-neutral-100 transition-all">
           Login
         </Link>
         <Button>
