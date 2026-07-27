@@ -6,8 +6,8 @@ const Navbar = () => {
   return (
     <div className="content px-18 py-6 flex justify-between items-center">
       <div className="logo-Content flex text-xl font-bold items-baseline gap-2">
-        <Image src="/logo.svg" alt="logo" width={"16"} height={"16"} />
-        <p>REAL</p>
+        <Image src="/logo.svg" alt="logo" width={"20"} height={"20"} />
+        <p className="text-3xl">real.</p>
       </div>
       <InputButtonGroup />
       <div className="action flex gap-6 items-center ">
@@ -48,11 +48,11 @@ const Navbar = () => {
             />
           </svg>
         </Link>
-        <Link href={"/"} className="px-4 py-1.5 rounded-full hover:bg-neutral-100 transition-all">
+        <Link href={"/login"} className="px-4 py-1.5 rounded-full hover:bg-neutral-100 transition-all">
           Login
         </Link>
         <Button>
-          <Link href={'/'}>
+          <Link href={'/signup'}>
           Signup
           
           </Link> 
