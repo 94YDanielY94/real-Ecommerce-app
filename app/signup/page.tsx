@@ -13,7 +13,7 @@ export default function SignUpPage() {
       <header className="absolute left-10 top-8">
         <Link
           href="/"
-          className="flex items-center gap-3 text-3xl font-bold tracking-tight"
+          className="sm:flex hidden items-center gap-3 text-3xl font-bold tracking-tight"
         >
           <Image src="/logo.svg" alt="logo" width={20} height={20} />
           <span>real.</span>

@@ -1,3 +1,4 @@
+import Footer from "@/components/ui/Footer";
 import Navbar from "@/components/ui/Navbar";
 import ProductCard from "@/components/ui/Product-card";
 import ShopFilters from "@/components/ui/Shop-filter";
@@ -21,6 +22,7 @@ export default function Home() {
         <ProductCard />
         <ProductCard />
       </div>
+      <Footer/>
     </div>
   );
 }
