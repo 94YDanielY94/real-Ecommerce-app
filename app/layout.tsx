@@ -1,11 +1,20 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Manrope, Figtree,Google_Sans_Flex } from "next/font/google";
+import {
+  Geist,
+  Geist_Mono,
+  Manrope,
+  Figtree,
+  Google_Sans_Flex,
+} from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
-const figtreeHeading = Figtree({subsets:['latin'],variable:'--font-heading'});
+const figtreeHeading = Figtree({
+  subsets: ["latin"],
+  variable: "--font-heading",
+});
 
-const manrope = Manrope({subsets:['latin'],variable:'--font-sans'});
+const manrope = Manrope({ subsets: ["latin"], variable: "--font-sans" });
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,7 +43,16 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn("h-full", "antialiased", geistSans.variable, geistMono.variable, "font-sans", manrope.variable, figtreeHeading.variable,googleFlex.variable)}
+      className={cn(
+        "h-full",
+        "antialiased",
+        geistSans.variable,
+        geistMono.variable,
+        "font-sans",
+        manrope.variable,
+        figtreeHeading.variable,
+        googleFlex.variable,
+      )}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

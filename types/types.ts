@@ -1,0 +1,30 @@
+export interface ProductImage {
+  id: string;
+  image_url: string;
+  product_id: string;
+  is_primary?: boolean; 
+  created_at?: Date;
+}
+
+export interface Product {
+  id: string; 
+  category_id: string; 
+  name: string;
+  slug: string;
+  description: string; 
+  price: number;
+  stock_quantity: number;
+  brand: string;
+  specifications: Record<string, any>; 
+  is_active: boolean;
+  created_at: Date;
+  product_images: ProductImage[]; 
+}
+
+export interface Category {
+  id: string;
+  parent_id: string | null; 
+  name: string;
+  slug: string;
+  description: string | null;
+}
