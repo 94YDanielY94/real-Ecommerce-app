@@ -43,3 +43,5 @@ next-env.d.ts
 
 # local doc
 commits.md
+do.md
+/lib/generated/prisma

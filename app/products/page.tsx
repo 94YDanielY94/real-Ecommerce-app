@@ -65,24 +65,8 @@ export default function ProductPage() {
 
       <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr] px-4 sm:px-6 lg:px-18">
         {/* Images */}
-        <section className="flex flex-col-reverse md:grid md:grid-cols-[100px_1fr] gap-3 sm:gap-4">
-          {/* Thumbnails */}
-          <div className="flex md:flex-col gap-3 overflow-x-auto pb-2 md:pb-0 scrollbar-none">
-            {[1, 2, 3, 4].map((img) => (
-              <button
-                key={img}
-                className="aspect-square h-20 w-20 md:h-auto md:w-full shrink-0 overflow-hidden rounded-xl border border-neutral-200 transition-all hover:border-black focus:outline-none focus:ring-2 focus:ring-black"
-              >
-                <Image
-                  src="/wal16.png"
-                  alt={`Thumbnail ${img}`}
-                  width={120}
-                  height={120}
-                  className="h-full w-full object-cover"
-                />
-              </button>
-            ))}
-          </div>
+        <section className="">
+         
 
           {/* Main Image */}
           <div className="aspect-square w-full overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-50">
