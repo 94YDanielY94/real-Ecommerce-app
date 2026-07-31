@@ -211,7 +211,8 @@ export const UsersScalarFieldEnum = {
   phone: 'phone',
   created_at: 'created_at',
   updated_at: 'updated_at',
-  google_id: 'google_id'
+  google_id: 'google_id',
+  is_admin: 'is_admin'
 } as const
 
 export type UsersScalarFieldEnum = (typeof UsersScalarFieldEnum)[keyof typeof UsersScalarFieldEnum]

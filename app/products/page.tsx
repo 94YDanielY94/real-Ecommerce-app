@@ -176,7 +176,7 @@ export default function ProductPage() {
 
           <div className="mt-6 grid grid-cols-2 gap-6 max-w-3xl">
             <p className="text-muted-foreground">Display</p>
-            <p className="font-medium">6.9" AMOLED</p>
+            <p className="font-medium">6.9&quot; AMOLED</p>
 
             <p className="text-muted-foreground">Processor</p>
             <p className="font-medium">Snapdragon 8 Elite</p>

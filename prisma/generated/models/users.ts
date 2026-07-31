@@ -34,6 +34,7 @@ export type UsersMinAggregateOutputType = {
   created_at: Date | null
   updated_at: Date | null
   google_id: string | null
+  is_admin: boolean | null
 }
 
 export type UsersMaxAggregateOutputType = {
@@ -46,6 +47,7 @@ export type UsersMaxAggregateOutputType = {
   created_at: Date | null
   updated_at: Date | null
   google_id: string | null
+  is_admin: boolean | null
 }
 
 export type UsersCountAggregateOutputType = {
@@ -58,6 +60,7 @@ export type UsersCountAggregateOutputType = {
   created_at: number
   updated_at: number
   google_id: number
+  is_admin: number
   _all: number
 }
 
@@ -72,6 +75,7 @@ export type UsersMinAggregateInputType = {
   created_at?: true
   updated_at?: true
   google_id?: true
+  is_admin?: true
 }
 
 export type UsersMaxAggregateInputType = {
@@ -84,6 +88,7 @@ export type UsersMaxAggregateInputType = {
   created_at?: true
   updated_at?: true
   google_id?: true
+  is_admin?: true
 }
 
 export type UsersCountAggregateInputType = {
@@ -96,6 +101,7 @@ export type UsersCountAggregateInputType = {
   created_at?: true
   updated_at?: true
   google_id?: true
+  is_admin?: true
   _all?: true
 }
 
@@ -181,6 +187,7 @@ export type UsersGroupByOutputType = {
   created_at: Date | null
   updated_at: Date | null
   google_id: string | null
+  is_admin: boolean
   _count: UsersCountAggregateOutputType | null
   _min: UsersMinAggregateOutputType | null
   _max: UsersMaxAggregateOutputType | null
@@ -214,6 +221,7 @@ export type usersWhereInput = {
   created_at?: Prisma.DateTimeNullableFilter<"users"> | Date | string | null
   updated_at?: Prisma.DateTimeNullableFilter<"users"> | Date | string | null
   google_id?: Prisma.StringNullableFilter<"users"> | string | null
+  is_admin?: Prisma.BoolFilter<"users"> | boolean
   addresses?: Prisma.AddressesListRelationFilter
   carts?: Prisma.XOR<Prisma.CartsNullableScalarRelationFilter, Prisma.cartsWhereInput> | null
   orders?: Prisma.OrdersListRelationFilter
@@ -230,6 +238,7 @@ export type usersOrderByWithRelationInput = {
   created_at?: Prisma.SortOrderInput | Prisma.SortOrder
   updated_at?: Prisma.SortOrderInput | Prisma.SortOrder
   google_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  is_admin?: Prisma.SortOrder
   addresses?: Prisma.addressesOrderByRelationAggregateInput
   carts?: Prisma.cartsOrderByWithRelationInput
   orders?: Prisma.ordersOrderByRelationAggregateInput
@@ -249,6 +258,7 @@ export type usersWhereUniqueInput = Prisma.AtLeast<{
   phone?: Prisma.StringNullableFilter<"users"> | string | null
   created_at?: Prisma.DateTimeNullableFilter<"users"> | Date | string | null
   updated_at?: Prisma.DateTimeNullableFilter<"users"> | Date | string | null
+  is_admin?: Prisma.BoolFilter<"users"> | boolean
   addresses?: Prisma.AddressesListRelationFilter
   carts?: Prisma.XOR<Prisma.CartsNullableScalarRelationFilter, Prisma.cartsWhereInput> | null
   orders?: Prisma.OrdersListRelationFilter
@@ -265,6 +275,7 @@ export type usersOrderByWithAggregationInput = {
   created_at?: Prisma.SortOrderInput | Prisma.SortOrder
   updated_at?: Prisma.SortOrderInput | Prisma.SortOrder
   google_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  is_admin?: Prisma.SortOrder
   _count?: Prisma.usersCountOrderByAggregateInput
   _max?: Prisma.usersMaxOrderByAggregateInput
   _min?: Prisma.usersMinOrderByAggregateInput
@@ -283,6 +294,7 @@ export type usersScalarWhereWithAggregatesInput = {
   created_at?: Prisma.DateTimeNullableWithAggregatesFilter<"users"> | Date | string | null
   updated_at?: Prisma.DateTimeNullableWithAggregatesFilter<"users"> | Date | string | null
   google_id?: Prisma.StringNullableWithAggregatesFilter<"users"> | string | null
+  is_admin?: Prisma.BoolWithAggregatesFilter<"users"> | boolean
 }
 
 export type usersCreateInput = {
@@ -295,6 +307,7 @@ export type usersCreateInput = {
   created_at?: Date | string | null
   updated_at?: Date | string | null
   google_id?: string | null
+  is_admin: boolean
   addresses?: Prisma.addressesCreateNestedManyWithoutUsersInput
   carts?: Prisma.cartsCreateNestedOneWithoutUsersInput
   orders?: Prisma.ordersCreateNestedManyWithoutUsersInput
@@ -311,6 +324,7 @@ export type usersUncheckedCreateInput = {
   created_at?: Date | string | null
   updated_at?: Date | string | null
   google_id?: string | null
+  is_admin: boolean
   addresses?: Prisma.addressesUncheckedCreateNestedManyWithoutUsersInput
   carts?: Prisma.cartsUncheckedCreateNestedOneWithoutUsersInput
   orders?: Prisma.ordersUncheckedCreateNestedManyWithoutUsersInput
@@ -327,6 +341,7 @@ export type usersUpdateInput = {
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   google_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   addresses?: Prisma.addressesUpdateManyWithoutUsersNestedInput
   carts?: Prisma.cartsUpdateOneWithoutUsersNestedInput
   orders?: Prisma.ordersUpdateManyWithoutUsersNestedInput
@@ -343,6 +358,7 @@ export type usersUncheckedUpdateInput = {
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   google_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   addresses?: Prisma.addressesUncheckedUpdateManyWithoutUsersNestedInput
   carts?: Prisma.cartsUncheckedUpdateOneWithoutUsersNestedInput
   orders?: Prisma.ordersUncheckedUpdateManyWithoutUsersNestedInput
@@ -359,6 +375,7 @@ export type usersCreateManyInput = {
   created_at?: Date | string | null
   updated_at?: Date | string | null
   google_id?: string | null
+  is_admin: boolean
 }
 
 export type usersUpdateManyMutationInput = {
@@ -371,6 +388,7 @@ export type usersUpdateManyMutationInput = {
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   google_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type usersUncheckedUpdateManyInput = {
@@ -383,6 +401,7 @@ export type usersUncheckedUpdateManyInput = {
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   google_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type UsersScalarRelationFilter = {
@@ -400,6 +419,7 @@ export type usersCountOrderByAggregateInput = {
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   google_id?: Prisma.SortOrder
+  is_admin?: Prisma.SortOrder
 }
 
 export type usersMaxOrderByAggregateInput = {
@@ -412,6 +432,7 @@ export type usersMaxOrderByAggregateInput = {
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   google_id?: Prisma.SortOrder
+  is_admin?: Prisma.SortOrder
 }
 
 export type usersMinOrderByAggregateInput = {
@@ -424,6 +445,7 @@ export type usersMinOrderByAggregateInput = {
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   google_id?: Prisma.SortOrder
+  is_admin?: Prisma.SortOrder
 }
 
 export type usersCreateNestedOneWithoutAddressesInput = {
@@ -482,6 +504,10 @@ export type usersUpdateOneRequiredWithoutReviewsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.usersUpdateToOneWithWhereWithoutReviewsInput, Prisma.usersUpdateWithoutReviewsInput>, Prisma.usersUncheckedUpdateWithoutReviewsInput>
 }
 
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
+}
+
 export type usersCreateWithoutAddressesInput = {
   id?: string
   email: string
@@ -492,6 +518,7 @@ export type usersCreateWithoutAddressesInput = {
   created_at?: Date | string | null
   updated_at?: Date | string | null
   google_id?: string | null
+  is_admin: boolean
   carts?: Prisma.cartsCreateNestedOneWithoutUsersInput
   orders?: Prisma.ordersCreateNestedManyWithoutUsersInput
   reviews?: Prisma.reviewsCreateNestedManyWithoutUsersInput
@@ -507,6 +534,7 @@ export type usersUncheckedCreateWithoutAddressesInput = {
   created_at?: Date | string | null
   updated_at?: Date | string | null
   google_id?: string | null
+  is_admin: boolean
   carts?: Prisma.cartsUncheckedCreateNestedOneWithoutUsersInput
   orders?: Prisma.ordersUncheckedCreateNestedManyWithoutUsersInput
   reviews?: Prisma.reviewsUncheckedCreateNestedManyWithoutUsersInput
@@ -538,6 +566,7 @@ export type usersUpdateWithoutAddressesInput = {
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   google_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   carts?: Prisma.cartsUpdateOneWithoutUsersNestedInput
   orders?: Prisma.ordersUpdateManyWithoutUsersNestedInput
   reviews?: Prisma.reviewsUpdateManyWithoutUsersNestedInput
@@ -553,6 +582,7 @@ export type usersUncheckedUpdateWithoutAddressesInput = {
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   google_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   carts?: Prisma.cartsUncheckedUpdateOneWithoutUsersNestedInput
   orders?: Prisma.ordersUncheckedUpdateManyWithoutUsersNestedInput
   reviews?: Prisma.reviewsUncheckedUpdateManyWithoutUsersNestedInput
@@ -568,6 +598,7 @@ export type usersCreateWithoutCartsInput = {
   created_at?: Date | string | null
   updated_at?: Date | string | null
   google_id?: string | null
+  is_admin: boolean
   addresses?: Prisma.addressesCreateNestedManyWithoutUsersInput
   orders?: Prisma.ordersCreateNestedManyWithoutUsersInput
   reviews?: Prisma.reviewsCreateNestedManyWithoutUsersInput
@@ -583,6 +614,7 @@ export type usersUncheckedCreateWithoutCartsInput = {
   created_at?: Date | string | null
   updated_at?: Date | string | null
   google_id?: string | null
+  is_admin: boolean
   addresses?: Prisma.addressesUncheckedCreateNestedManyWithoutUsersInput
   orders?: Prisma.ordersUncheckedCreateNestedManyWithoutUsersInput
   reviews?: Prisma.reviewsUncheckedCreateNestedManyWithoutUsersInput
@@ -614,6 +646,7 @@ export type usersUpdateWithoutCartsInput = {
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   google_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   addresses?: Prisma.addressesUpdateManyWithoutUsersNestedInput
   orders?: Prisma.ordersUpdateManyWithoutUsersNestedInput
   reviews?: Prisma.reviewsUpdateManyWithoutUsersNestedInput
@@ -629,6 +662,7 @@ export type usersUncheckedUpdateWithoutCartsInput = {
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   google_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   addresses?: Prisma.addressesUncheckedUpdateManyWithoutUsersNestedInput
   orders?: Prisma.ordersUncheckedUpdateManyWithoutUsersNestedInput
   reviews?: Prisma.reviewsUncheckedUpdateManyWithoutUsersNestedInput
@@ -644,6 +678,7 @@ export type usersCreateWithoutOrdersInput = {
   created_at?: Date | string | null
   updated_at?: Date | string | null
   google_id?: string | null
+  is_admin: boolean
   addresses?: Prisma.addressesCreateNestedManyWithoutUsersInput
   carts?: Prisma.cartsCreateNestedOneWithoutUsersInput
   reviews?: Prisma.reviewsCreateNestedManyWithoutUsersInput
@@ -659,6 +694,7 @@ export type usersUncheckedCreateWithoutOrdersInput = {
   created_at?: Date | string | null
   updated_at?: Date | string | null
   google_id?: string | null
+  is_admin: boolean
   addresses?: Prisma.addressesUncheckedCreateNestedManyWithoutUsersInput
   carts?: Prisma.cartsUncheckedCreateNestedOneWithoutUsersInput
   reviews?: Prisma.reviewsUncheckedCreateNestedManyWithoutUsersInput
@@ -690,6 +726,7 @@ export type usersUpdateWithoutOrdersInput = {
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   google_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   addresses?: Prisma.addressesUpdateManyWithoutUsersNestedInput
   carts?: Prisma.cartsUpdateOneWithoutUsersNestedInput
   reviews?: Prisma.reviewsUpdateManyWithoutUsersNestedInput
@@ -705,6 +742,7 @@ export type usersUncheckedUpdateWithoutOrdersInput = {
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   google_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   addresses?: Prisma.addressesUncheckedUpdateManyWithoutUsersNestedInput
   carts?: Prisma.cartsUncheckedUpdateOneWithoutUsersNestedInput
   reviews?: Prisma.reviewsUncheckedUpdateManyWithoutUsersNestedInput
@@ -720,6 +758,7 @@ export type usersCreateWithoutReviewsInput = {
   created_at?: Date | string | null
   updated_at?: Date | string | null
   google_id?: string | null
+  is_admin: boolean
   addresses?: Prisma.addressesCreateNestedManyWithoutUsersInput
   carts?: Prisma.cartsCreateNestedOneWithoutUsersInput
   orders?: Prisma.ordersCreateNestedManyWithoutUsersInput
@@ -735,6 +774,7 @@ export type usersUncheckedCreateWithoutReviewsInput = {
   created_at?: Date | string | null
   updated_at?: Date | string | null
   google_id?: string | null
+  is_admin: boolean
   addresses?: Prisma.addressesUncheckedCreateNestedManyWithoutUsersInput
   carts?: Prisma.cartsUncheckedCreateNestedOneWithoutUsersInput
   orders?: Prisma.ordersUncheckedCreateNestedManyWithoutUsersInput
@@ -766,6 +806,7 @@ export type usersUpdateWithoutReviewsInput = {
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   google_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   addresses?: Prisma.addressesUpdateManyWithoutUsersNestedInput
   carts?: Prisma.cartsUpdateOneWithoutUsersNestedInput
   orders?: Prisma.ordersUpdateManyWithoutUsersNestedInput
@@ -781,6 +822,7 @@ export type usersUncheckedUpdateWithoutReviewsInput = {
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   google_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_admin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   addresses?: Prisma.addressesUncheckedUpdateManyWithoutUsersNestedInput
   carts?: Prisma.cartsUncheckedUpdateOneWithoutUsersNestedInput
   orders?: Prisma.ordersUncheckedUpdateManyWithoutUsersNestedInput
@@ -845,6 +887,7 @@ export type usersSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   created_at?: boolean
   updated_at?: boolean
   google_id?: boolean
+  is_admin?: boolean
   addresses?: boolean | Prisma.users$addressesArgs<ExtArgs>
   carts?: boolean | Prisma.users$cartsArgs<ExtArgs>
   orders?: boolean | Prisma.users$ordersArgs<ExtArgs>
@@ -862,6 +905,7 @@ export type usersSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   created_at?: boolean
   updated_at?: boolean
   google_id?: boolean
+  is_admin?: boolean
 }, ExtArgs["result"]["users"]>
 
 export type usersSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -874,6 +918,7 @@ export type usersSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   created_at?: boolean
   updated_at?: boolean
   google_id?: boolean
+  is_admin?: boolean
 }, ExtArgs["result"]["users"]>
 
 export type usersSelectScalar = {
@@ -886,9 +931,10 @@ export type usersSelectScalar = {
   created_at?: boolean
   updated_at?: boolean
   google_id?: boolean
+  is_admin?: boolean
 }
 
-export type usersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password_hash" | "first_name" | "last_name" | "phone" | "created_at" | "updated_at" | "google_id", ExtArgs["result"]["users"]>
+export type usersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password_hash" | "first_name" | "last_name" | "phone" | "created_at" | "updated_at" | "google_id" | "is_admin", ExtArgs["result"]["users"]>
 export type usersInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   addresses?: boolean | Prisma.users$addressesArgs<ExtArgs>
   carts?: boolean | Prisma.users$cartsArgs<ExtArgs>
@@ -917,6 +963,7 @@ export type $usersPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     created_at: Date | null
     updated_at: Date | null
     google_id: string | null
+    is_admin: boolean
   }, ExtArgs["result"]["users"]>
   composites: {}
 }
@@ -1353,6 +1400,7 @@ export interface usersFieldRefs {
   readonly created_at: Prisma.FieldRef<"users", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"users", 'DateTime'>
   readonly google_id: Prisma.FieldRef<"users", 'String'>
+  readonly is_admin: Prisma.FieldRef<"users", 'Boolean'>
 }
     
 

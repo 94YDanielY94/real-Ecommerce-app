@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Slider } from "./slider";
 
@@ -11,14 +11,11 @@ export default function PriceRange() {
   const minFromUrl = Number(searchParams.get("minPrice")) || 0;
   const maxFromUrl = Number(searchParams.get("maxPrice")) || 5000;
 
+  // Initialize state directly from URL search params (No useEffect needed!)
   const [range, setRange] = useState<[number, number]>([
     minFromUrl,
     maxFromUrl,
   ]);
-
-  useEffect(() => {
-    setRange([minFromUrl, maxFromUrl]);
-  }, [minFromUrl, maxFromUrl]);
 
   const handleCommit = (value: number | readonly number[]) => {
     const values = Array.isArray(value) ? value : [value];
@@ -40,9 +37,10 @@ export default function PriceRange() {
       </div>
 
       <Slider
+        key={`${minFromUrl}-${maxFromUrl}`} // Re-initializes slider state if URL params change externally
         value={range}
-        onValueChange={(val) => setRange(val as [number, number])} 
-        onValueCommitted={handleCommit} 
+        onValueChange={(val) => setRange(val as [number, number])}
+        onValueCommitted={handleCommit}
         min={0}
         max={5000}
         step={50}

@@ -3,135 +3,124 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { Search, ShoppingCart, Menu, X } from "lucide-react";
+
 import { InputButtonGroup } from "./search";
 import { Button } from "./button";
 
-const Navbar = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
+import { useSession, signOut } from "next-auth/react";
+import { UserCircle } from "lucide-react";
 
+const Navbar = () => {
+  const [mobileMenu, setMobileMenu] = useState(false);
+  const [mobileSearch, setMobileSearch] = useState(false);
+  const { data: session } = useSession();
   return (
-    <header className="w-full bg-white sticky top-0 z-50">
-      <div className=" mx-auto px-4 sm:px-6 lg:px-18 py-4 flex justify-between items-center gap-4">
-        
-        {/* Brand Logo */}
-        <Link href="/" className="shrink-0">
-          <div className="flex items-center gap-2 ">
-            <Image src="/logo.svg" alt="logo" width={24} height={24} priority />
-            <span className="text-2xl sm:text-3xl font-bold tracking-tight">
-              real.
-            </span>
-          </div>
-        </Link>
+    <header className="sticky top-0 z-50 w-full bg-white">
+      <div className="mx-auto flex items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-18">
+        {/* Logo */}
+        <Logo />
 
         {/* Desktop Search */}
-        <div className="hidden md:block flex-1 max-w-lg mx-6">
+        <div className="hidden flex-1 md:block max-w-lg">
           <InputButtonGroup />
         </div>
 
-        {/* Action Controls */}
-        <div className="flex items-center gap-1 sm:gap-3">
-          
-          {/* Mobile Search Toggle Button */}
-          <button
-            onClick={() => setIsSearchOpen(!isSearchOpen)}
-            className="md:hidden p-2 rounded-full hover:bg-neutral-100 transition-colors"
-            aria-label="Toggle Search"
-          >
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <circle cx="11" cy="11" r="8" />
-              <path d="m21 21-4.3-4.3" />
-            </svg>
-          </button>
+        {/* Actions */}
+        <nav className="flex items-center gap-2">
+          {/* Mobile Search */}
+          <IconButton onClick={() => setMobileSearch(!mobileSearch)}>
+            <Search size={20} />
+          </IconButton>
 
-          {/* Cart / Products Link */}
+          {/* Cart */}
           <Link
             href="/cart"
-            className="p-2.5 rounded-full hover:bg-neutral-100 transition-colors"
-            aria-label="Cart"
+            className="rounded-full p-2.5 hover:bg-neutral-100"
           >
-            <svg
-              width="22"
-              height="22"
-              viewBox="0 0 0.72 0.72"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M0.15 0.21h0.414a0.06 0.06 0 0 1 0.06 0.066l-0.018 0.18A0.06 0.06 0 0 1 0.546 0.51H0.259a0.06 0.06 0 0 1 -0.059 -0.048z"
-                stroke="#000"
-                strokeWidth="0.06"
-                strokeLinejoin="round"
-              />
-              <path
-                d="m0.15 0.21 -0.024 -0.097A0.03 0.03 0 0 0 0.097 0.09H0.06"
-                stroke="#000"
-                strokeWidth="0.06"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M0.24 0.63h0.06M0.48 0.63h0.06"
-                stroke="#000"
-                strokeWidth="0.06"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            <ShoppingCart size={22} />
           </Link>
 
-          {/* Desktop Auth Links */}
-          <Link
-            href="/login"
-            className="hidden sm:inline-block px-4 py-2 text-sm font-medium rounded-full hover:bg-neutral-100 transition-colors"
-          >
-            Login
-          </Link>
+          <div className="hidden items-center gap-2 sm:flex">
+            {session ? (
+              <div className="flex items-center gap-3">
+                <Link
+                  href="/profile"
+                  className="
+            flex items-center gap-2
+            rounded-full
+            px-3 py-2
+            hover:bg-neutral-100
+          "
+                >
+                  <UserCircle size={24} />
 
-          <Button  className="hidden sm:inline-flex">
-            <Link href="/signup">Signup</Link>
-          </Button>
+                </Link>
 
-          {/* Mobile Menu Hamburger Toggle Button */}
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 rounded-lg hover:bg-neutral-100 transition-colors text-xl leading-none"
-            aria-label="Toggle Menu"
-          >
-            {isMobileMenuOpen ? "✕" : "☰"}
-          </button>
-        </div>
+                <Button variant="outline" onClick={() => signOut()}>
+                  Logout
+                </Button>
+              </div>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className="
+            rounded-full
+            px-4 py-2
+            text-sm font-medium
+            hover:bg-neutral-100
+          "
+                >
+                  Login
+                </Link>
+
+                <Button>
+                  <Link href="/signup">Signup</Link>
+                </Button>
+              </>
+            )}
+          </div>
+
+          {/* Mobile Menu */}
+          <IconButton onClick={() => setMobileMenu(!mobileMenu)}>
+            {mobileMenu ? <X size={22} /> : <Menu size={22} />}
+          </IconButton>
+        </nav>
       </div>
 
-      {/* Mobile Search Bar Dropdown */}
-      {isSearchOpen && (
-        <div className="md:hidden px-4 pb-4 pt-1 border-t border-neutral-100">
+      {/* Mobile Search */}
+      {mobileSearch && (
+        <div className="border-t px-4 py-3 md:hidden">
           <InputButtonGroup />
         </div>
       )}
 
-      {/* Mobile Slide-down Navigation Menu */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden border-t border-neutral-100 bg-white px-4 py-6 space-y-4 shadow-lg">
+      {/* Mobile Menu */}
+      {mobileMenu && (
+        <div
+          className="
+            border-t bg-white 
+            px-4 py-6 
+            shadow-lg 
+            md:hidden
+          "
+        >
           <div className="flex flex-col gap-3">
             <Link
               href="/login"
-              className="w-full text-center px-4 py-2.5 text-sm font-medium rounded-lg hover:bg-neutral-100 transition-colors"
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={() => setMobileMenu(false)}
+              className="
+                  rounded-lg py-3
+                  text-center
+                  hover:bg-neutral-100
+                "
             >
               Login
             </Link>
-            <Button  className="w-full">
-              <Link href="/signup" onClick={() => setIsMobileMenuOpen(false)}>
+
+            <Button className="w-full">
+              <Link href="/signup" onClick={() => setMobileMenu(false)}>
                 Signup
               </Link>
             </Button>
@@ -141,5 +130,48 @@ const Navbar = () => {
     </header>
   );
 };
+
+function Logo() {
+  return (
+    <Link href="/" className="shrink-0">
+      <div className="flex items-center gap-2">
+        <Image src="/logo.svg" alt="logo" width={24} height={24} priority />
+
+        <span
+          className="
+          text-2xl 
+          font-bold 
+          tracking-tight
+        "
+        >
+          real.
+        </span>
+      </div>
+    </Link>
+  );
+}
+
+function IconButton({
+  children,
+  onClick,
+}: {
+  children: React.ReactNode;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className="
+        rounded-full
+        p-2.5
+        hover:bg-neutral-100
+        transition
+        md:hidden
+      "
+    >
+      {children}
+    </button>
+  );
+}
 
 export default Navbar;

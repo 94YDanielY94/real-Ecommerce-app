@@ -142,6 +142,7 @@ model users {
   created_at    DateTime?   @default(now()) @db.Timestamp(6)
   updated_at    DateTime?   @default(now()) @db.Timestamp(6)
   google_id     String?     @unique
+  is_admin      Boolean
   addresses     addresses[]
   carts         carts?
   orders        orders[]

@@ -28,3 +28,24 @@ export interface Category {
   slug: string;
   description: string | null;
 }
+
+export type User = {
+  id: string; // uuid
+  email: string;
+  password_hash: string;
+  google_id?: string | null;
+  first_name: string;
+  last_name: string;
+  phone?: string | null;
+  is_admin: boolean;
+  created_at: Date;
+  updated_at: Date;
+};
+
+export type SessionUser = {
+  id: string;
+  email: string;
+  first_name: string;
+  last_name: string;
+  is_admin: boolean;
+};

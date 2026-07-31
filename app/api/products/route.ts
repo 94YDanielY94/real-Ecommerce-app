@@ -1,18 +1,39 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-//Fetching all products and the filter
+// Fetching all products with active filters
 export const GET = async (request: Request) => {
   try {
-  const { searchParams } = new URL(request.url);
+    const { searchParams } = new URL(request.url);
 
     const categoryId = searchParams.get("category");
     const minPrice = searchParams.get("minPrice");
     const maxPrice = searchParams.get("maxPrice");
     const sort = searchParams.get("sort");
+    const search = searchParams.get("search");
 
     const where: any = {};
-    if (categoryId) where.category_id = categoryId;
+
+    // 1. Expanded Search Filter (matches name, description, brand, OR category name)
+    if (search) {
+      where.OR = [
+        { name: { contains: search, mode: "insensitive" } },
+        { description: { contains: search, mode: "insensitive" } },
+        { brand: { contains: search, mode: "insensitive" } },
+        {
+          categories: {
+            name: { contains: search, mode: "insensitive" },
+          },
+        },
+      ];
+    }
+
+    // 2. Explicit Category Filter
+    if (categoryId) {
+      where.category_id = categoryId;
+    }
+
+    // 3. Price Filter
     if (minPrice || maxPrice) {
       where.price = {
         ...(minPrice ? { gte: parseFloat(minPrice) } : {}),
@@ -20,7 +41,8 @@ export const GET = async (request: Request) => {
       };
     }
 
-    let orderBy: any = { created_at: "desc" };
+    // 4. Sorting
+    let orderBy: Record<string, "asc" | "desc"> = { created_at: "desc" };
 
     switch (sort) {
       case "Price: Low → High":
@@ -43,15 +65,13 @@ export const GET = async (request: Request) => {
         categories: true,
       },
     });
-    return new NextResponse(JSON.stringify({ products }), {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    });
+
+    return NextResponse.json({ products }, { status: 200 });
   } catch (error) {
-    console.error(error);
-    return new NextResponse(
-      JSON.stringify({ message: "Error fetching products" }),
-      { status: 500, headers: { "Content-Type": "application/json" } },
+    console.error("Database query error:", error);
+    return NextResponse.json(
+      { message: "Error fetching products" },
+      { status: 500 }
     );
   }
 };

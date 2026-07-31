@@ -3,7 +3,7 @@ import Navbar from "@/components/ui/Navbar";
 import ProductCard from "@/components/ui/Product-card";
 import ShopFilters from "@/components/ui/Shop-filter";
 import { Suspense } from "react";
-
+import { Product } from "@/types/types";
 const getProductData = async (params?: string) => {
   const url = params
     ? `http://localhost:3040/api/products?${params}`
@@ -28,14 +28,16 @@ export default async function Home({
     minPrice?: string;
     maxPrice?: string;
     sort?: string;
+    search?: string;
   }>;
 }) {
-  const { category, minPrice, maxPrice,sort } = await searchParams;
+  const { category, minPrice, maxPrice,sort,search } = await searchParams;
   const params = new URLSearchParams();
   if (category) params.set("category", category);
   if (minPrice) params.set("minPrice", minPrice);
   if (maxPrice) params.set("maxPrice", maxPrice);
   if (sort) params.set("sort", sort);
+  if (search) params.set("search", search);
   const data = await getProductData(params.toString());
 
   return (
@@ -45,7 +47,7 @@ export default async function Home({
 
       <div className="product-grid flex justify-center flex-wrap gap-8 px-18">
         <Suspense fallback={<div>Loading products...</div>}>
-          {data.products?.map((product: any) => (
+          {data.products?.map((product: Product) => (
             <ProductCard key={product.id} data={product} />
           ))}
         </Suspense>

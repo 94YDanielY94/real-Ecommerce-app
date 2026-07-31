@@ -1,3 +1,9 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+
+import { useRegister } from "@/hooks/use-register";
 import Link from "next/link";
 import Image from "next/image";
 import { Eye } from "lucide-react";
@@ -7,6 +13,38 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 
 export default function SignUpPage() {
+  const router = useRouter();
+
+  const [email, setEmail] = useState("");
+
+  const [password, setPassword] = useState("");
+
+  const [confirm, setConfirm] = useState("");
+
+  const register = useRegister();
+
+  function submit() {
+    if (password !== confirm) {
+      alert("Passwords do not match");
+      return;
+    }
+
+    register.mutate(
+      {
+        email,
+        password,
+      },
+      {
+        onSuccess() {
+          router.push("/login");
+        },
+
+        onError(error) {
+          alert(error.message);
+        },
+      },
+    );
+  }
   return (
     <main className="min-h-screen bg-white">
       {/* Logo */}
@@ -20,7 +58,6 @@ export default function SignUpPage() {
         </Link>
       </header>
 
-      {/* Form */}
       <section className="flex min-h-screen flex-col items-center justify-end px-6">
         <div className="flex flex-1 w-full max-w-md flex-col justify-center">
           <div className="space-y-2 text-center">
@@ -48,33 +85,50 @@ export default function SignUpPage() {
 
             <div className="space-y-2">
               <label className="text-sm font-medium">Email</label>
-              <Input type="email" className="rounded-full" />
+              <Input
+                type="email"
+                className="rounded-full"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </div>
 
             <div className="space-y-2">
               <label className="text-sm font-medium">Password</label>
 
               <div className="relative">
-                <Input type="password" className="rounded-full" />
+                <Input
+                  type="password"
+                  value={password}
+                  className="rounded-full"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
 
                 <Eye className="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
               </div>
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium">
-                Confirm Password
-              </label>
+              <label className="text-sm font-medium">Confirm Password</label>
 
               <div className="relative">
-                <Input type="password" className="rounded-full" />
+                <Input
+                  type="password"
+                  value={confirm}
+                  className="rounded-full"
+                  onChange={(e) => setConfirm(e.target.value)}
+                />
 
                 <Eye className="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
               </div>
             </div>
 
-            <Button className="h-12 w-full rounded-full">
-              Create Account
+            <Button
+              className="w-full"
+              disabled={register.isPending}
+              onClick={submit}
+            >
+              {register.isPending ? "Creating..." : "Create Account"}
             </Button>
 
             <p className="text-center text-sm text-muted-foreground">
@@ -87,19 +141,18 @@ export default function SignUpPage() {
               </Link>
             </p>
           </div>
-
         </div>
-          <p className="mb-2 text-center text-xs text-muted-foreground">
-            By creating an account, you agree to our{" "}
-            <Link href="/terms" className="underline">
-              Terms of Service
-            </Link>{" "}
-            and{" "}
-            <Link href="/privacy" className="underline">
-              Privacy Policy
-            </Link>
-            .
-          </p>
+        <p className="mb-2 text-center text-xs text-muted-foreground">
+          By creating an account, you agree to our{" "}
+          <Link href="/terms" className="underline">
+            Terms of Service
+          </Link>{" "}
+          and{" "}
+          <Link href="/privacy" className="underline">
+            Privacy Policy
+          </Link>
+          .
+        </p>
       </section>
     </main>
   );
