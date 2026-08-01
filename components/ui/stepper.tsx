@@ -1,16 +1,39 @@
-'use client'
-import { Button } from "@/components/ui/button";
-import { useState } from "react";
+"use client";
 
-export function Stepper() {
-  const [quantity, setQuantity] = useState(1);
+import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
+
+interface StepperProps {
+  initialQuantity?: number;
+  max?: number;
+  onQuantityChange?: (qty: number) => void;
+}
+
+export function Stepper({
+  initialQuantity = 1,
+  max = Infinity,
+  onQuantityChange,
+}: StepperProps) {
+  const [quantity, setQuantity] = useState(initialQuantity);
+
+  useEffect(() => {
+    setQuantity(initialQuantity);
+  }, [initialQuantity]);
+
+  const updateQuantity = (newQty: number) => {
+    const qty = Math.min(Math.max(1, newQty), max);
+
+    setQuantity(qty);
+    onQuantityChange?.(qty);
+  };
 
   return (
     <div className="flex items-center border border-neutral-500 rounded-full w-fit">
       <Button
         variant="ghost"
         size="icon"
-        onClick={() => setQuantity(Math.max(1, quantity - 1))}
+        disabled={quantity <= 1}
+        onClick={() => updateQuantity(quantity - 1)}
       >
         −
       </Button>
@@ -20,7 +43,8 @@ export function Stepper() {
       <Button
         variant="ghost"
         size="icon"
-        onClick={() => setQuantity(quantity + 1)}
+        disabled={quantity >= max}
+        onClick={() => updateQuantity(quantity + 1)}
       >
         +
       </Button>

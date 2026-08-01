@@ -1,0 +1,5 @@
+PATCH	http://localhost:3040/api/cart/d420cf4d-9e70-4ea0-aeb3-57c4a4d305ca 
+content-type: application/json
+{
+      "quantity":1,
+}

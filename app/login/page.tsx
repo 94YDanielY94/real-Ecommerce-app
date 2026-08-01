@@ -65,7 +65,11 @@ export default function SignInPage() {
           </div>
 
           <div className="mt-10 space-y-6">
-            <Button variant="outline" className="w-full h-12 rounded-full">
+            <Button
+              variant="outline"
+              className="w-full h-12 rounded-full"
+              onClick={() => signIn("google", { callbackUrl: "/" })}
+            >
               <Image src="/google.svg" alt="logo" width={20} height={20} />
               Continue with Google
             </Button>

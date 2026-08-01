@@ -11,7 +11,7 @@ import { Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-
+import { signIn } from "next-auth/react";
 export default function SignUpPage() {
   const router = useRouter();
 
@@ -72,7 +72,11 @@ export default function SignUpPage() {
           </div>
 
           <div className="mt-10 space-y-6">
-            <Button variant="outline" className="h-12 w-full rounded-full">
+            <Button
+              variant="outline"
+              className="h-12 w-full rounded-full"
+              onClick={() => signIn("google", { callbackUrl: "/" })}
+            >
               <Image src="/google.svg" alt="Google" width={20} height={20} />
               Continue with Google
             </Button>

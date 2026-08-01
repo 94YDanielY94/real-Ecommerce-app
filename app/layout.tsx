@@ -9,7 +9,7 @@ import {
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Providers from "./providers";
-// app/layout.tsx
+import { Toaster } from "@/components/ui/toast"
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://real.com"), // Replace with your domain
@@ -128,6 +128,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <Providers>{children}</Providers>
+         <Toaster />
       </body>
     </html>
   );

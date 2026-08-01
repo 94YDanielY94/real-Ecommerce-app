@@ -33,33 +33,28 @@ const Navbar = () => {
             <Search size={20} />
           </IconButton>
 
-          {/* Cart */}
-          <Link
-            href="/cart"
-            className="rounded-full p-2.5 hover:bg-neutral-100"
-          >
-            <ShoppingCart size={22} />
-          </Link>
 
           <div className="hidden items-center gap-2 sm:flex">
             {session ? (
               <div className="flex items-center gap-3">
-                <Link
-                  href="/profile"
-                  className="
-            flex items-center gap-2
-            rounded-full
-            px-3 py-2
-            hover:bg-neutral-100
-          "
-                >
-                  <UserCircle size={24} />
+                <Button variant={'outline'}>
 
-                </Link>
-
+                <Link href="/orders">orders</Link>{" "}
+                </Button>
                 <Button variant="outline" onClick={() => signOut()}>
                   Logout
                 </Button>
+                <Link
+                  href="/profile"
+                  className="
+                    flex items-center gap-2
+                    rounded-full
+                    px-3 py-2
+                    hover:bg-neutral-100
+                  "
+                >
+                  <UserCircle size={24} />
+                </Link>
               </div>
             ) : (
               <>
@@ -80,6 +75,12 @@ const Navbar = () => {
                 </Button>
               </>
             )}
+             <Link
+            href="/cart"
+            className="rounded-full p-2.5 hover:bg-neutral-100"
+          >
+            <ShoppingCart size={22} />
+          </Link>
           </div>
 
           {/* Mobile Menu */}

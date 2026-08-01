@@ -3,22 +3,21 @@ import { Heart, Star } from "lucide-react";
 import { Button } from "./button";
 import Link from "next/link";
 import { Product } from "@/types/types";
+import AddToCartButton from "./Cart-btn";
 export default function ProductCard({ data }: { data: Product }) {
   return (
-    <Link href={"/products"}>
+    <div>
       <div className="flex-1 max-w-96 min-w-60 overflow-hidden">
-        <div className="relative h-72 bg-neutral-200 rounded-2xl">
-          <Image
-            src={`${data.product_images[0].image_url}`}
-            alt="Product"
-            fill
-            className="object-cover rounded-2xl object-center"
-          />
-
-          <button className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-white shadow">
-            <Heart className="h-4 w-4 text-emerald-700" />
-          </button>
-        </div>
+        <Link href={"/products"}>
+          <div className="relative h-72 bg-neutral-200 rounded-2xl">
+            <Image
+              src={`${data.product_images[0].image_url}`}
+              alt="Product"
+              fill
+              className="object-cover rounded-2xl object-center"
+            />
+          </div>
+        </Link>
 
         <div className="space-y-2 p-4">
           <div className="flex items-start justify-between gap-3">
@@ -44,13 +43,9 @@ export default function ProductCard({ data }: { data: Product }) {
             <span className="text-sm text-neutral-500">(200)</span>
           </div>
 
-          <Button
-            className={"bg-transparent border-2 border-primary text-black"}
-          >
-            Add to Cart
-          </Button>
+          <AddToCartButton productId={data.id} />
         </div>
       </div>
-    </Link>
+    </div>
   );
 }
