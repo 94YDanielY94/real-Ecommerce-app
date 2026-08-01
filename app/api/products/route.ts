@@ -63,6 +63,20 @@ export const GET = async (request: Request) => {
       include: {
         product_images: true,
         categories: true,
+        reviews: {
+          include: {
+            users: {
+              select: {
+                id: true,
+                first_name: true,
+                last_name: true,
+              },
+            },
+          },
+          orderBy: {
+            created_at: "desc",
+          },
+        },
       },
     });
 
@@ -71,7 +85,7 @@ export const GET = async (request: Request) => {
     console.error("Database query error:", error);
     return NextResponse.json(
       { message: "Error fetching products" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };

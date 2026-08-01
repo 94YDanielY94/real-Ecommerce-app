@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { toast } from "./toast";
 
-async function addToCart(productId: string) {
+async function addToCart(productId: string, quantity: number = 1) {
   const res = await fetch("/api/cart", {
     method: "POST",
     headers: {
@@ -12,7 +12,7 @@ async function addToCart(productId: string) {
     },
     body: JSON.stringify({
       productId,
-      quantity: 1,
+      quantity,
     }),
   });
 
@@ -25,23 +25,27 @@ async function addToCart(productId: string) {
 
 export default function AddToCartButton({
   productId,
+  quantity = 1,
+  variant = "default",
 }: {
   productId: string;
+  quantity?: number;
+  variant?: "default" | "outline";
 }) {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: () => addToCart(productId),
+    mutationFn: () => addToCart(productId, quantity),
 
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["cart"],
       });
-       toast.add({
+      toast.add({
         type: "success",
         title: "Added to Cart",
-          description: "product added successfully",
-        });
+        description: "product added successfully",
+      });
     },
   });
 
@@ -49,7 +53,7 @@ export default function AddToCartButton({
     <Button
       onClick={() => mutation.mutate()}
       disabled={mutation.isPending}
-      className="bg-transparent border-2 border-primary text-black"
+      className={`${variant == "default" ? "" : "bg-transparent border-2 border-primary text-black"}`}
     >
       {mutation.isPending ? "Adding..." : "Add to Cart"}
     </Button>

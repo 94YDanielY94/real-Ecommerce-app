@@ -2,28 +2,45 @@ export interface ProductImage {
   id: string;
   image_url: string;
   product_id: string;
-  is_primary?: boolean; 
+  is_primary?: boolean;
   created_at?: Date;
 }
 
 export interface Product {
-  id: string; 
-  category_id: string; 
+  id: string;
+  category_id: string;
   name: string;
   slug: string;
-  description: string; 
+  description: string;
   price: number;
   stock_quantity: number;
   brand: string;
-  specifications: Record<string, any>; 
+  specifications: Record<string, any>;
   is_active: boolean;
   created_at: Date;
-  product_images: ProductImage[]; 
+  product_images: ProductImage[];
+  reviews?: Review[];
+}
+
+export interface ReviewUser {
+  id: string;
+  first_name: string;
+  last_name: string;
+}
+
+export interface Review {
+  id: string;
+  user_id: string;
+  product_id: string;
+  rating: number;
+  comment: string | null;
+  created_at: Date | string | null;
+  users?: ReviewUser;
 }
 
 export interface Category {
   id: string;
-  parent_id: string | null; 
+  parent_id: string | null;
   name: string;
   slug: string;
   description: string | null;

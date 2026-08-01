@@ -219,9 +219,7 @@ export default function CartClient({ cart }: { cart: Cart }) {
           <div className="lg:col-span-1">
             <Card className="h-fit sticky top-24">
               <CardHeader>
-                <CardTitle className="font-serif text-xl">
-                  Order Summary
-                </CardTitle>
+                <CardTitle className=" text-xl">Order Summary</CardTitle>
               </CardHeader>
 
               <CardContent className="space-y-4">
@@ -256,9 +254,11 @@ export default function CartClient({ cart }: { cart: Cart }) {
                   <span>${total.toFixed(2)}</span>
                 </div>
 
-                <Button className="w-full" size="lg">
-                  <Link href="/checkout">Proceed to Checkout</Link>
-                </Button>
+                <Link href="/checkout">
+                  <Button className="w-full" size="lg">
+                    Proceed to Checkout
+                  </Button>
+                </Link>
 
                 <div className="text-xs text-muted-foreground space-y-1.5 pt-2">
                   <p className="flex items-center gap-1.5">

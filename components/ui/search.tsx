@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { redirect, useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Field } from "@/components/ui/field";
@@ -24,8 +24,7 @@ export function InputButtonGroup() {
     } else {
       params.delete("search"); 
     }
-
-    router.push(`?${params.toString()}`, { scroll: false });
+    router.push(`/?${params.toString()}`, { scroll: false });
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
