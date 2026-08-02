@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 import { registerSchema } from "@/lib/validations/zodauth";
-import { z } from 'zod'
+import { z } from "zod";
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -20,7 +20,7 @@ export async function POST(request: Request) {
         },
       );
     }
-    const { email, password } = result.data;
+    const { email, password, first_name, last_name, phone } = result.data;
     if (!email || !password) {
       return NextResponse.json(
         { message: "All fields are required." },
@@ -44,8 +44,9 @@ export async function POST(request: Request) {
     const user = await prisma.users.create({
       data: {
         email,
-        first_name: "",
-        last_name: "",
+        first_name,
+        last_name,
+        phone: phone || null,
         is_admin: false,
         password_hash: hashedPassword,
       },
@@ -57,6 +58,9 @@ export async function POST(request: Request) {
         user: {
           id: user.id,
           email: user.email,
+          first_name: user.first_name,
+          last_name: user.last_name,
+          phone: user.phone,
         },
       },
       { status: 201 },

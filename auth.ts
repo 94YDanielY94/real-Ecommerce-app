@@ -45,20 +45,21 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           email: user.email,
           first_name: user.first_name,
           last_name: user.last_name,
-          is_admin: user.is_admin,
+          phone: user.phone,
+          is_admin: user.is_admin ?? false,
         };
       },
     }),
   ],
   callbacks: {
-    async jwt({ token, user, trigger, session }) {
+    async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
-        // token.first_name = user.first_name;
-        // token.last_name = user.last_name;
+        token.first_name = user.first_name;
+        token.last_name = user.last_name;
+        token.phone = user.phone;
         token.is_admin = user.is_admin;
       }
-
 
       return token;
     },
@@ -66,8 +67,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     async session({ session, token }) {
       if (token && session.user) {
         session.user.id = token.id as string;
-        // session.user.first_name = token.first_name as string;
-        // session.user.last_name = token.last_name as string;
+        session.user.first_name = token.first_name as string;
+        session.user.last_name = token.last_name as string;
+        session.user.phone = token.phone as string | undefined;
         session.user.is_admin = token.is_admin as boolean;
       }
       return session;

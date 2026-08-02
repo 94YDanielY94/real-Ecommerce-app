@@ -4,12 +4,12 @@ import {
   Geist_Mono,
   Manrope,
   Figtree,
-  Google_Sans_Flex,
+  // Google_Sans_Flex,
 } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Providers from "./providers";
-import { Toaster } from "@/components/ui/toast"
+import { Toaster } from "@/components/ui/toast";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://real.com"), // Replace with your domain
@@ -102,10 +102,12 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
-const googleFlex = Google_Sans_Flex({
-  variable: "--font-google-flex",
-  subsets: ["latin"],
-});
+// const googleFlex = Google_Sans_Flex({
+//   variable: "--font-google-flex",
+//   subsets: ["latin"],
+//   display: "swap",
+//   adjustFontFallback: false,
+// });
 
 export default function RootLayout({
   children,
@@ -123,12 +125,12 @@ export default function RootLayout({
         "font-sans",
         manrope.variable,
         figtreeHeading.variable,
-        googleFlex.variable,
+        // googleFlex.variable,
       )}
     >
       <body className="min-h-full flex flex-col">
         <Providers>{children}</Providers>
-         <Toaster />
+        <Toaster />
       </body>
     </html>
   );

@@ -15,6 +15,12 @@ import { signIn } from "next-auth/react";
 export default function SignUpPage() {
   const router = useRouter();
 
+  const [first_name, setFirstName] = useState("");
+
+  const [last_name, setLastName] = useState("");
+
+  const [phone, setPhone] = useState("");
+
   const [email, setEmail] = useState("");
 
   const [password, setPassword] = useState("");
@@ -33,6 +39,9 @@ export default function SignUpPage() {
       {
         email,
         password,
+        first_name,
+        last_name,
+        phone,
       },
       {
         onSuccess() {
@@ -85,6 +94,36 @@ export default function SignUpPage() {
               <Separator className="flex-1" />
               <span className="text-sm text-muted-foreground">or</span>
               <Separator className="flex-1" />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label className="text-sm font-medium">First Name</label>
+                <Input
+                  className="rounded-full"
+                  value={first_name}
+                  onChange={(e) => setFirstName(e.target.value)}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Last Name</label>
+                <Input
+                  className="rounded-full"
+                  value={last_name}
+                  onChange={(e) => setLastName(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Phone Number</label>
+              <Input
+                type="tel"
+                className="rounded-full"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+              />
             </div>
 
             <div className="space-y-2">

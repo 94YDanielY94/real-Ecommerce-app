@@ -35,7 +35,7 @@ export default function SignInPage() {
       return;
     }
 
-    router.push("/checkout");
+    router.push("/");
   }
 
   return (

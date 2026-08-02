@@ -254,7 +254,7 @@ export default function CartClient({ cart }: { cart: Cart }) {
                   <span>${total.toFixed(2)}</span>
                 </div>
 
-                <Link href="/checkout">
+                <Link href="/address" className="w-full">
                   <Button className="w-full" size="lg">
                     Proceed to Checkout
                   </Button>
