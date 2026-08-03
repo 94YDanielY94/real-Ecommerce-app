@@ -2,19 +2,30 @@ import { NextResponse } from "next/server";
 import { headers } from "next/headers";
 import { stripe } from "../../../lib/stripe";
 import { prisma } from "../../../lib/prisma"; // or your db client
+import { auth } from "@/auth";
 
 export async function POST(req: Request) {
   try {
     const headersList = await headers();
     const origin = headersList.get("origin") || "http://localhost:3040";
 
+    // Authenticate the request and derive userId from the session — never
+    // trust a client-supplied userId from the request body.
+    const session = await auth();
+
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const userId = session.user.id;
+
     // Parse body params (cartId, userId, addressId)
     const body = await req.json();
-    const { cartId, userId, addressId } = body;
+    const { cartId, addressId } = body;
 
-    if (!cartId || !userId || !addressId) {
+    if (!cartId || !addressId) {
       return NextResponse.json(
-        { error: "Missing cartId, userId or addressId" },
+        { error: "Missing cartId or addressId" },
         { status: 400 },
       );
     }
@@ -67,7 +78,7 @@ export async function POST(req: Request) {
     }));
 
     // Create Checkout Session
-    const session = await stripe.checkout.sessions.create({
+    const stripeSession = await stripe.checkout.sessions.create({
       line_items,
       mode: "payment",
       success_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}`,
@@ -81,11 +92,11 @@ export async function POST(req: Request) {
       // allow_promotion_codes: true,
     });
 
-    if (!session.url) {
+    if (!stripeSession.url) {
       throw new Error("Stripe checkout session did not return a redirect URL.");
     }
 
-    return NextResponse.json({ url: session.url });
+    return NextResponse.json({ url: stripeSession.url });
   } catch (error: any) {
     console.error("Checkout error:", error);
 

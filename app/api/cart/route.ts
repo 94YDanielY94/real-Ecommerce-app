@@ -65,6 +65,8 @@ export async function POST(req: Request) {
     }
 
     const userId = session.user.id;
+    console.log('userid',userId);
+    
 
     const { productId, quantity } = await req.json();
 

@@ -18,7 +18,7 @@ export async function PATCH(
 
     if (!itemId || typeof itemId !== "string") {
       return NextResponse.json(
-        { error: "Missing or invalid itemId"},
+        { error: "Missing or invalid itemId" },
         { status: 400 },
       );
     }
@@ -110,24 +110,40 @@ export async function PATCH(
   }
 }
 
-
-export const DELETE = async (_req: Request,  context: { params: Promise<{ id: string }> | { id: string } },
+export const DELETE = async (
+  _req: Request,
+  context: { params: Promise<{ id: string }> | { id: string } },
 ) => {
   try {
+    const session = await auth();
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const params = await Promise.resolve(context.params);
     const id = params?.id;
 
+    if (!id || typeof id !== "string") {
+      return NextResponse.json(
+        { error: "Missing or invalid itemId" },
+        { status: 400 },
+      );
+    }
 
-    const cartItem = await prisma.cart_items.findUnique({
+    // Ensure the cart item belongs to the authenticated user
+    const cartItem = await prisma.cart_items.findFirst({
       where: {
         id,
+        carts: {
+          user_id: session.user.id,
+        },
       },
     });
 
     if (!cartItem) {
       return NextResponse.json(
         { message: "Cart item not found" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -139,14 +155,14 @@ export const DELETE = async (_req: Request,  context: { params: Promise<{ id: st
 
     return NextResponse.json(
       { message: "Cart item deleted successfully" },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error(error);
 
     return NextResponse.json(
       { message: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };

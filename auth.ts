@@ -52,13 +52,46 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, account }) {
       if (user) {
-        token.id = user.id;
-        token.first_name = user.first_name;
-        token.last_name = user.last_name;
-        token.phone = user.phone;
-        token.is_admin = user.is_admin;
+        if (account?.provider === "google") {
+          // Google OAuth "user.id" is the Google account ID, NOT our DB UUID.
+          // Look up the real DB user so session.user.id is the Prisma UUID.
+          const dbUser = await prisma.users.findUnique({
+            where: { email: user.email! },
+            select: {
+              id: true,
+              email: true,
+              first_name: true,
+              last_name: true,
+              phone: true,
+              is_admin: true,
+            },
+          });
+
+          if (dbUser) {
+            token.id = dbUser.id;
+            token.first_name = dbUser.first_name;
+            token.last_name = dbUser.last_name;
+            token.phone = dbUser.phone;
+            token.is_admin = dbUser.is_admin ?? false;
+          } else {
+            // Fallback: keep the OAuth-provided id (shouldn't normally happen,
+            // because signIn() creates the DB user before jwt() runs).
+            token.id = user.id;
+            token.first_name = user.first_name;
+            token.last_name = user.last_name;
+            token.phone = user.phone;
+            token.is_admin = user.is_admin ?? false;
+          }
+        } else {
+          // Credentials provider: authorize() already returns the DB UUID.
+          token.id = user.id;
+          token.first_name = user.first_name;
+          token.last_name = user.last_name;
+          token.phone = user.phone;
+          token.is_admin = user.is_admin;
+        }
       }
 
       return token;
@@ -91,6 +124,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
               google_id: account.providerAccountId,
               is_admin: false,
             },
+          });
+        } else if (!dbUser.google_id) {
+          // Existing credentials account signing in with Google for the first
+          // time: link the Google account to it.
+          await prisma.users.update({
+            where: { id: dbUser.id },
+            data: { google_id: account.providerAccountId },
           });
         }
 

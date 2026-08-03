@@ -129,8 +129,7 @@ export default function CartClient({ cart }: { cart: Cart }) {
     0,
   );
 
-  const estimatedTax = subtotal * 0.065;
-  const total = subtotal + estimatedTax;
+  const total = subtotal;
 
   return (
     <main className="space-y-8 min-h-screen flex flex-col justify-between">
@@ -240,12 +239,6 @@ export default function CartClient({ cart }: { cart: Cart }) {
                   <span className="font-medium text-emerald-600">Free</span>
                 </div>
 
-                <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Estimated Tax</span>
-                  <span className="font-medium">
-                    ${estimatedTax.toFixed(2)}
-                  </span>
-                </div>
 
                 <Separator />
 
