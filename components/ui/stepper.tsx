@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface StepperProps {
   initialQuantity?: number;
@@ -16,9 +16,12 @@ export function Stepper({
 }: StepperProps) {
   const [quantity, setQuantity] = useState(initialQuantity);
 
-  useEffect(() => {
+  // Adjust state during rendering when initialQuantity changes
+  const [prevInitial, setPrevInitial] = useState(initialQuantity);
+  if (prevInitial !== initialQuantity) {
+    setPrevInitial(initialQuantity);
     setQuantity(initialQuantity);
-  }, [initialQuantity]);
+  }
 
   const updateQuantity = (newQty: number) => {
     const qty = Math.min(Math.max(1, newQty), max);

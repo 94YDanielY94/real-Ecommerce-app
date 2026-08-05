@@ -3,6 +3,7 @@ import Stripe from "stripe";
 import { headers } from "next/headers";
 import { stripe } from "@/lib/stripe";
 import { prisma } from "@/lib/prisma";
+import { Prisma } from "@/prisma/generated/client";
 
 export async function POST(req: Request) {
   console.log("STRIPE WEBHOOK HIT");
@@ -21,10 +22,14 @@ export async function POST(req: Request) {
       signature,
       process.env.STRIPE_WEBHOOK_SECRET!,
     );
-  } catch (err: any) {
-    console.error("Webhook signature verification failed:", err.message);
+  } catch (err: unknown) {
+    const message =
+      err instanceof Error
+        ? err.message
+        : "Webhook signature verification failed";
+    console.error("Webhook signature verification failed:", message);
     return NextResponse.json(
-      { error: `Webhook Error: ${err.message}` },
+      { error: `Webhook Error: ${message}` },
       { status: 400 },
     );
   }
@@ -77,24 +82,26 @@ export async function POST(req: Request) {
 
     try {
       await prisma.$transaction(async (tx) => {
+        const orderData: Prisma.ordersUncheckedCreateInput = {
+          user_id: userId,
+          shipping_address_id: shippingAddressId,
+          status: "PROCESSING",
+          total_amount: session.amount_total!,
+          stripe_session_id: session.id,
+          stripe_event_id: event.id,
+          order_items: {
+            create: cart.cart_items.map((item) => ({
+              quantity: item.quantity,
+              unit_price: item.products.price,
+              products: {
+                connect: { id: item.product_id },
+              },
+            })),
+          },
+        };
+
         await tx.orders.create({
-          data: {
-            user_id: userId,
-            shipping_address_id: shippingAddressId,
-            status: "PROCESSING",
-            total_amount: session.amount_total!,
-            stripe_session_id: session.id,
-            stripe_event_id: event.id,
-            order_items: {
-              create: cart.cart_items.map((item) => ({
-                quantity: item.quantity,
-                unit_price: item.products.price,
-                products: {
-                  connect: { id: item.product_id },
-                },
-              })),
-            },
-          } as any,
+          data: orderData,
         });
         console.log("removing cart");
 
@@ -110,7 +117,7 @@ export async function POST(req: Request) {
 
         await tx.cart_items.deleteMany({ where: { cart_id: cartId } });
       });
-    } catch (err) {
+    } catch (err: unknown) {
       console.error("Transaction failed:", err);
       return NextResponse.json(
         { error: "Failed to process order" },

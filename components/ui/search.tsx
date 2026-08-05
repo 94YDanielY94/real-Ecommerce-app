@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { redirect, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Field } from "@/components/ui/field";
@@ -10,7 +10,6 @@ import { Input } from "@/components/ui/input";
 export function InputButtonGroup() {
   const router = useRouter();
   const searchParams = useSearchParams();
-
 
   const searchFromUrl = searchParams.get("search") || "";
 
@@ -22,7 +21,7 @@ export function InputButtonGroup() {
     if (query.trim()) {
       params.set("search", query.trim());
     } else {
-      params.delete("search"); 
+      params.delete("search");
     }
     router.push(`/?${params.toString()}`, { scroll: false });
   };
@@ -46,10 +45,10 @@ export function InputButtonGroup() {
           onKeyDown={handleKeyDown}
           className="w-full min-w-0 bg-neutral-200"
         />
-        <Button 
-          type="button" 
-          onClick={handleSearch} 
-          variant="outline" 
+        <Button
+          type="button"
+          onClick={handleSearch}
+          variant="outline"
           className="shrink-0"
         >
           Search

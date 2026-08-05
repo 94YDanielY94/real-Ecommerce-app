@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Stepper } from "@/components/ui/stepper";
 import { toast } from "@/components/ui/toast";
 import Image from "next/image";
-import type { Cart, CartItem } from "./page";
+import type { Cart } from "./page";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
@@ -238,7 +238,6 @@ export default function CartClient({ cart }: { cart: Cart }) {
                   <span className="text-muted-foreground">Shipping</span>
                   <span className="font-medium text-emerald-600">Free</span>
                 </div>
-
 
                 <Separator />
 

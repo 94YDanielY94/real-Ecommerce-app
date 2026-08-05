@@ -97,12 +97,16 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json({ url: stripeSession.url });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Checkout error:", error);
 
     // Handle Stripe-specific errors
-    const message = error?.message || "Internal server error";
-    const status = error?.statusCode || 500;
+    const message =
+      error instanceof Error ? error.message : "Internal server error";
+    const status =
+      error && typeof error === "object" && "statusCode" in error
+        ? Number((error as { statusCode: unknown }).statusCode) || 500
+        : 500;
 
     return NextResponse.json({ error: message }, { status });
   }

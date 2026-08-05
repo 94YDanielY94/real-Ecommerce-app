@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { Prisma } from "@/prisma/generated/client";
 
 // Fetching all products with active filters
 export const GET = async (request: Request) => {
@@ -12,7 +13,7 @@ export const GET = async (request: Request) => {
     const sort = searchParams.get("sort");
     const search = searchParams.get("search");
 
-    const where: any = {};
+    const where: Prisma.productsWhereInput = {};
 
     // 1. Expanded Search Filter (matches name, description, brand, OR category name)
     if (search) {

@@ -15,7 +15,7 @@ export interface Product {
   price: number;
   stock_quantity: number;
   brand: string;
-  specifications: Record<string, any>;
+  specifications: Record<string, unknown>;
   is_active: boolean;
   created_at: Date;
   product_images: ProductImage[];

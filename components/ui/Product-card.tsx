@@ -1,9 +1,9 @@
 import Image from "next/image";
-import { Heart, Star } from "lucide-react";
-import { Button } from "./button";
+import { Star } from "lucide-react";
 import Link from "next/link";
 import { Product } from "@/types/types";
 import AddToCartButton from "./Cart-btn";
+
 export default function ProductCard({ data }: { data: Product }) {
   const reviews = data.reviews ?? [];
   const reviewCount = reviews.length;

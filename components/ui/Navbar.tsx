@@ -33,15 +33,19 @@ const Navbar = () => {
             <Search size={20} />
           </IconButton>
 
-
           <div className="hidden items-center gap-2 sm:flex">
             {session ? (
               <div className="flex items-center gap-3">
-                <Button variant={'outline'}>
-
-                <Link href="/orders">orders</Link>{" "}
-                </Button>
-                <Button variant="outline" onClick={() => signOut()}>
+                <Link href="/orders">
+                  <Button variant={"outline"} className="cursor-pointer">
+                    orders
+                  </Button>
+                </Link>{" "}
+                <Button
+                  variant="outline"
+                  className={"cursor-pointer"}
+                  onClick={() => signOut()}
+                >
                   Logout
                 </Button>
                 <Link
@@ -75,12 +79,12 @@ const Navbar = () => {
                 </Button>
               </>
             )}
-             <Link
-            href="/cart"
-            className="rounded-full p-2.5 hover:bg-neutral-100"
-          >
-            <ShoppingCart size={22} />
-          </Link>
+            <Link
+              href="/cart"
+              className="rounded-full p-2.5 hover:bg-neutral-100"
+            >
+              <ShoppingCart size={22} />
+            </Link>
           </div>
 
           {/* Mobile Menu */}
